@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Gestão Veicular</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root {
+  --preto: #000000;
+  --azul: #0f1a2b;
+  --dourado: #f1b500;
+  --cinza: #999;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--preto);
+  color: var(--dourado);
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.card {
+  background: var(--azul);
+  border: 2px solid var(--dourado);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.card p {
+  margin: 6px 0;
+  color: white;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  background: var(--azul);
+  border: 2px solid var(--dourado);
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: var(--cinza);
+}
+
+button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 15px;
+  background: var(--dourado);
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Sistema de Gestão Veicular</h2>
+  <h1>PULSE</h1>
+
+  <!-- CARD SUPERIOR -->
+  <div class="card">
+    <p><strong>POSTO/GRAD:</strong> <span id="cardPosto">---</span></p>
+    <p><strong>RE:</strong> <span id="cardRE">---</span></p>
+    <p><strong>KM FINAL:</strong> <span id="cardKmFinal">---</span></p>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <label>POSTO/GRAD</label>
+  <select id="posto">
+    <option value="">Selecione</option>
+    <option>Sd PM</option>
+    <option>Cb PM</option>
+    <option>3º Sgt PM</option>
+    <option>2º Sgt PM</option>
+    <option>1º Sgt PM</option>
+  </select>
+
+  <label>RE</label>
+  <input id="re" placeholder="Digite seu RE">
+
+  <label>KM INICIAL</label>
+  <input id="kmInicial" type="number">
+
+  <label>HORÁRIO SAÍDA</label>
+  <input id="horaSaida" type="time">
+
+  <button onclick="enviar()">Enviar</button>
+
+</div>
+
+<script>
+function enviar() {
+  const dados = {
+    posto: posto.value,
+    re: re.value,
+    kmInicial: kmInicial.value,
+    horaSaida: horaSaida.value,
+    dataHora: new Date().toLocaleString("pt-BR")
+  };
+
+  // Atualiza o card superior
+  cardPosto.innerText = dados.posto;
+  cardRE.innerText = dados.re;
+  cardKmFinal.innerText = dados.kmInicial;
+
+  fetch("COLE_AQUI_A_URL_DO_SCRIPT", {
+    method: "POST",
+    body: JSON.stringify(dados)
+  })
+  .then(() => alert("Registro enviado com sucesso"))
+  .catch(() => alert("Erro ao enviar"));
+}
+</script>
+
+</body>
+</html>
